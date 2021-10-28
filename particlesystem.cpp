@@ -2,9 +2,9 @@
 
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem() : bh_(new BlackHole(QPointF(300, 300), 400, 2, 2, 2))
+ParticleSystem::ParticleSystem() : bh_(new BlackHole(QPointF(300, 300), 600, 2, 2, 2))
 {
-    generateParticles(30);
+    generateParticles(5);
 }
 
 void ParticleSystem::generateParticles(int n)
@@ -47,14 +47,17 @@ void ParticleSystem::calculateAcceleration() const
             }
         }
     }
+}
 
+void ParticleSystem::adjustBlackHole() const
+{
     for (const auto& p : particles_) {
-        auto acc = calculateAcceleration(p);
-        p->adjustAcc(acc);
+        p->adjustAcc(calculateAcceleration(p));
     }
 }
 
 void ParticleSystem::updateParticles() const
 {
     calculateAcceleration();
+    adjustBlackHole();
 }

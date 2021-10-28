@@ -22,9 +22,11 @@ private:
     // TODO: newton metric and porper inserts of bodys
 
     QPointF calculateAcceleration(Particle* src, Particle* dest = nullptr) const;
-    void generateParticles(int n);
     float distance(Particle* src, Particle* dest = nullptr) const;
+
+    void generateParticles(int n);
     void calculateAcceleration() const;
+    void adjustBlackHole() const;
 };
 
 #endif // PARTICLESYSTEM_H
