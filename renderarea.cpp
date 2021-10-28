@@ -22,6 +22,11 @@ void RenderArea::paintEvent(QPaintEvent *event)
     drawParticles(&painter);
 }
 
+void RenderArea::mousePressEvent(QMouseEvent *event)
+{
+
+}
+
 void RenderArea::drawBlackHole(QPainter *painter) const
 {
 //    QPointF center(width() / 2, height() / 2);
@@ -29,17 +34,28 @@ void RenderArea::drawBlackHole(QPainter *painter) const
 //    grad.setColorAt(0.000, QColor(0, 0, 0, 255));
 //    grad.setColorAt(0.9, QColor(0, 0, 0, 255));
 //    grad.setColorAt(1.000, QColor(0, 0, 0, 0.000));
-    painter->setBrush(QBrush(QColor(0,0,0)));
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(200, 200, 50, 50);
+      auto bh = sys_.getBlackHole();
+
+      painter->setBrush(QBrush(QColor(0,0,0)));
+      painter->setPen(Qt::NoPen);
+      painter->drawEllipse(bh->getPos(), 50, 50);
 }
 
 void RenderArea::drawParticles(QPainter *painter) const
 {
-
+    auto ps = sys_.getParticles();
+    painter->setBrush(QBrush(QColor(0,0,255)));
+    for (const auto& body : ps) {
+//        painter.drawPixmap(body.getPos().x(), body.getPos().y(), 20, 20, QPixmap(":/images/body.jpg"));
+        painter->drawEllipse(body->getX(), body->getY(), 10, 10);
+    }
 }
 
-void RenderArea::updateSystem() const
+void RenderArea::updateSystem()
 {
-
+    sys_.updateParticles();
+    for (const auto& p : sys_.getParticles()) {
+        p->updateState();
+    }
+    repaint();
 }

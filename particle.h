@@ -20,6 +20,7 @@ public:
     void updatePosition();
     void updateVelocity();
     void setAcceleration(const QPointF& acc);
+    void adjustAcc(const QPointF& acc);
 
 private:
     float mass_;

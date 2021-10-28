@@ -2,32 +2,59 @@
 
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem() : bh_(new BlackHole(QPointF(300, 300), 400, 2, 2, 2))
 {
-    generateParticles(4);
+    generateParticles(30);
 }
 
 void ParticleSystem::generateParticles(int n)
 {
     for (int i = 0; i < n; i++) {
-        auto* p = new Particle(200, QPointF(200, 200));
+//        auto mass = QRandomGenerator::global()->bounded(200);
+        auto mass = 200;
+        auto x = QRandomGenerator::global()->bounded(600);
+        auto y = QRandomGenerator::global()->bounded(600);
+        auto* p = new Particle(mass, QPointF(x, y));
         particles_ << p;
     }
 }
 
 float ParticleSystem::distance(Particle* src, Particle* dest) const
 {
-    return sqrt(pow(dest->getX() - src->getX(), 2) + pow(dest->getY() - src->getY(), 2));
+    QPointF pos = (dest) ? dest->getPos() : bh_->getPos();
+    return sqrt(pow(pos.x() - src->getX(), 2) + pow(pos.y() - src->getY(), 2));
+}
+
+QPointF ParticleSystem::calculateAcceleration(Particle* src, Particle* dest) const {
+    QPointF pos = (dest) ? dest->getPos() : bh_->getPos();
+    float mass = (dest) ? dest->getMass() : bh_->getMass();
+
+    float dist, ax, ay;
+    dist = distance(src, dest);
+    ax = 0.03 * mass * (pos.x() - src->getX()) / (dist * dist);
+    ay = 0.03 * mass * (pos.y() - src->getY()) / (dist * dist);
+
+    return QPointF(ax, ay);
 }
 
 void ParticleSystem::calculateAcceleration() const
 {
+    for (qsizetype i = 0; i < particles_.size(); i++) {
+        for (qsizetype j = 0; j < particles_.size(); j++) {
+            if (i != j) {
+                auto acc = calculateAcceleration(particles_[i], particles_[j]);
+                particles_[i]->setAcceleration(acc);
+            }
+        }
+    }
 
+    for (const auto& p : particles_) {
+        auto acc = calculateAcceleration(p);
+        p->adjustAcc(acc);
+    }
 }
 
 void ParticleSystem::updateParticles() const
 {
-    for (const auto& p : particles_) {
-        p->updateState();
-    }
+    calculateAcceleration();
 }

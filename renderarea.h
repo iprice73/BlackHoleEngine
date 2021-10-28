@@ -14,6 +14,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
     ParticleSystem sys_;
@@ -23,7 +24,7 @@ private:
     void drawParticles(QPainter* painter) const;
 
 private slots:
-    void updateSystem() const;
+    void updateSystem();
 };
 
 #endif // RENDERAREA_H

@@ -11,16 +11,20 @@ class ParticleSystem
 public:
     ParticleSystem();
 
+    const BlackHole* getBlackHole() const { return bh_; }
+    const QList<Particle*>& getParticles() const { return particles_; }
+    void updateParticles() const;
+
 private:
     QList<Particle*> particles_;
     BlackHole* bh_;
 
-    // TODO: Add position to blackhole, newton metric and porper inserts of bodys
+    // TODO: newton metric and porper inserts of bodys
 
+    QPointF calculateAcceleration(Particle* src, Particle* dest = nullptr) const;
     void generateParticles(int n);
-    float distance(Particle* src, Particle* dest) const;
+    float distance(Particle* src, Particle* dest = nullptr) const;
     void calculateAcceleration() const;
-    void updateParticles() const;
 };
 
 #endif // PARTICLESYSTEM_H

@@ -29,3 +29,8 @@ void Particle::updateVelocity()
 void Particle::setAcceleration(const QPointF &acc) {
     acc_ = acc;
 }
+
+void Particle::adjustAcc(const QPointF &acc)
+{
+    acc_ += acc;
+}
