@@ -80,12 +80,12 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>83</width>
+       <width>111</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>plot1</string>
+      <string>Drag and drop</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_4">
@@ -171,6 +171,45 @@
     <property name="text">
      <string>Render Black Hole</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>340</y>
+      <width>221</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Light</string>
+    </property>
+    <widget class="QCheckBox" name="checkBox_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>83</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Particle</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>83</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rays</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
