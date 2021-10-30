@@ -5,7 +5,7 @@
 
 constexpr int timeStep = 17;
 
-RenderArea::RenderArea() : sys_(ParticleSystem()), timer_(QTimer())
+RenderArea::RenderArea() : sys_(ParticleSystem(width(), height())), timer_(QTimer())
 {
     connect(&timer_, SIGNAL(timeout()), this, SLOT(updateSystem()));
     timer_.start(timeStep);
@@ -29,16 +29,17 @@ void RenderArea::mousePressEvent(QMouseEvent *event)
 
 void RenderArea::drawBlackHole(QPainter *painter) const
 {
-//    QPointF center(width() / 2, height() / 2);
-//    QRadialGradient grad(center, bh->get_rs() / 20);
-//    grad.setColorAt(0.000, QColor(0, 0, 0, 255));
-//    grad.setColorAt(0.9, QColor(0, 0, 0, 255));
-//    grad.setColorAt(1.000, QColor(0, 0, 0, 0.000));
-      auto bh = sys_.getBlackHole();
+    int bh_area = 60;
+    auto bh = sys_.getBlackHole();
+    QRadialGradient grad(bh->getPos(), bh_area);
+    grad.setColorAt(0, QColor(0, 0, 0));
+    grad.setColorAt(0.45, QColor(0, 0, 0));
+    grad.setColorAt(0.50, QColor(255, 255, 255, 127));
+    grad.setColorAt(1, QColor(255, 255, 255, 0));
 
-      painter->setBrush(QBrush(QColor(0,0,0)));
-      painter->setPen(Qt::NoPen);
-      painter->drawEllipse(bh->getPos(), 50, 50);
+    painter->setBrush(QBrush(grad));
+    painter->setPen(Qt::NoPen);
+    painter->drawEllipse(bh->getPos(), bh_area, bh_area);
 }
 
 void RenderArea::drawParticles(QPainter *painter) const

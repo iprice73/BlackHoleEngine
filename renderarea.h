@@ -20,6 +20,10 @@ private:
     ParticleSystem sys_;
     QTimer timer_;
 
+    bool insertingBodyEnabled = false;
+    bool insertingBlackHolesEnabled = false;
+
+
     void drawBlackHole(QPainter* painter) const;
     void drawParticles(QPainter* painter) const;
 
