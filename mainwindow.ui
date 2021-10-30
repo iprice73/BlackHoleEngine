@@ -34,7 +34,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>Insert Objects</string>
+     <string>Objects</string>
     </property>
     <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
@@ -67,7 +67,7 @@
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>230</y>
+      <y>340</y>
       <width>221</width>
       <height>101</height>
      </rect>
@@ -98,7 +98,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>plot2</string>
+      <string>Plots</string>
      </property>
     </widget>
    </widget>
@@ -112,7 +112,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>Select Metric</string>
+     <string>Metric</string>
     </property>
     <widget class="QCheckBox" name="checkBox_5">
      <property name="geometry">
@@ -176,7 +176,7 @@
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>340</y>
+      <y>230</y>
       <width>221</width>
       <height>101</height>
      </rect>
