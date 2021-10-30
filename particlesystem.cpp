@@ -1,21 +1,32 @@
 #include "particlesystem.h"
 
+#include <algorithm>
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem() : bh_(new BlackHole(QPointF(300, 300), 600, 2, 2, 2))
+ParticleSystem::ParticleSystem(int w, int h) : bh_(new BlackHole(QPointF(w / 2, h / 2), 100, 2, 2, 2))
 {
-    generateParticles(5);
+//    generateParticles(10);
 }
 
 void ParticleSystem::generateParticles(int n)
 {
     for (int i = 0; i < n; i++) {
-//        auto mass = QRandomGenerator::global()->bounded(200);
-        auto mass = 200;
+//        auto mass = QRandomGenerator::global()->bounded(100);
+        auto mass = 100;
         auto x = QRandomGenerator::global()->bounded(600);
         auto y = QRandomGenerator::global()->bounded(600);
-        auto* p = new Particle(mass, QPointF(x, y));
+        auto* p = new Particle(i, mass, QPointF(x, y));
         particles_ << p;
+    }
+}
+
+void ParticleSystem::eraseOnCollision()
+{
+    for (const auto& p : particles_) {
+        if (distance(p) < 30) {
+            auto it = std::find(particles_.begin(), particles_.end(), p);
+            if (it != particles_.end()) particles_.erase(it);
+        }
     }
 }
 
@@ -25,14 +36,19 @@ float ParticleSystem::distance(Particle* src, Particle* dest) const
     return sqrt(pow(pos.x() - src->getX(), 2) + pow(pos.y() - src->getY(), 2));
 }
 
+float ParticleSystem::softDist(float dist, float e) const
+{
+    return sqrt(pow(dist, 2) + pow(e, 2));
+}
+
 QPointF ParticleSystem::calculateAcceleration(Particle* src, Particle* dest) const {
     QPointF pos = (dest) ? dest->getPos() : bh_->getPos();
     float mass = (dest) ? dest->getMass() : bh_->getMass();
-
-    float dist, ax, ay;
-    dist = distance(src, dest);
-    ax = 0.03 * mass * (pos.x() - src->getX()) / (dist * dist);
-    ay = 0.03 * mass * (pos.y() - src->getY()) / (dist * dist);
+    const double G = 1;
+    float dist, ax, ay, e = 0.1;
+    dist = softDist(distance(src, dest), e);
+    ax = 0.3 * G * mass * (pos.x() - src->getX()) / (dist * dist);
+    ay = 0.3 * G * mass * (pos.y() - src->getY()) / (dist * dist);
 
     return QPointF(ax, ay);
 }
@@ -56,8 +72,9 @@ void ParticleSystem::adjustBlackHole() const
     }
 }
 
-void ParticleSystem::updateParticles() const
+void ParticleSystem::updateParticles()
 {
-    calculateAcceleration();
+    eraseOnCollision();
+//    calculateAcceleration();
     adjustBlackHole();
 }

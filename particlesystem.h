@@ -9,11 +9,11 @@
 class ParticleSystem
 {
 public:
-    ParticleSystem();
+    ParticleSystem(int w, int h);
 
     const BlackHole* getBlackHole() const { return bh_; }
     const QList<Particle*>& getParticles() const { return particles_; }
-    void updateParticles() const;
+    void updateParticles();
 
 private:
     QList<Particle*> particles_;
@@ -23,8 +23,11 @@ private:
 
     QPointF calculateAcceleration(Particle* src, Particle* dest = nullptr) const;
     float distance(Particle* src, Particle* dest = nullptr) const;
+    float softDist(float dist, float e) const ;
 
     void generateParticles(int n);
+    void eraseOnCollision();
+
     void calculateAcceleration() const;
     void adjustBlackHole() const;
 };
