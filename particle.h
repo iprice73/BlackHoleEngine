@@ -8,8 +8,9 @@ class Particle : public QObject
 {
 public:
     Particle();
-    Particle(float mass, const QPointF& point, QPointF init_vel = QPointF(0.0f, 0.0f));
+    Particle(int id, float mass, const QPointF& point, QPointF init_vel = QPointF(0.0f, 0.0f));
 
+    int getID() const { return id_; }
     float getMass() const { return mass_; }
     QPointF getPos() const { return pos_; }
     QPointF getVel() const { return vel_; }
@@ -22,7 +23,10 @@ public:
     void setAcceleration(const QPointF& acc);
     void adjustAcc(const QPointF& acc);
 
+    bool operator==(const Particle& right);
+
 private:
+    int id_;
     float mass_;
     QPointF pos_;
     QPointF vel_;

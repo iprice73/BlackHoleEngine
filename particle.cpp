@@ -5,7 +5,11 @@ Particle::Particle()
 
 }
 
-Particle::Particle(float mass, const QPointF& point, QPointF init_vel) : mass_(mass), pos_(point), vel_(init_vel)
+Particle::Particle(int id, float mass, const QPointF& point, QPointF init_vel) :
+    id_(id),
+    mass_(mass),
+    pos_(point),
+    vel_(init_vel)
 {
 
 }
@@ -33,4 +37,9 @@ void Particle::setAcceleration(const QPointF &acc) {
 void Particle::adjustAcc(const QPointF &acc)
 {
     acc_ += acc;
+}
+
+bool Particle::operator==(const Particle &right)
+{
+    return (right.getID() == id_);
 }
