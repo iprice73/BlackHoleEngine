@@ -5,10 +5,24 @@
 
 constexpr int timeStep = 17;
 
-RenderArea::RenderArea() : sys_(ParticleSystem(width(), height())), timer_(QTimer())
+RenderArea::RenderArea() :
+    sys_(ParticleSystem(width(),
+    height())),
+    timer_(QTimer()),
+    inserter_(ParticleInserter())
 {
     connect(&timer_, SIGNAL(timeout()), this, SLOT(updateSystem()));
     timer_.start(timeStep);
+}
+
+void RenderArea::setInsertBody(bool state)
+{
+    insertingBody = state;
+}
+
+void RenderArea::setInsertBlackHole(bool state)
+{
+    insertingBlackHoles = state;
 }
 
 void RenderArea::paintEvent(QPaintEvent *event)
@@ -24,7 +38,22 @@ void RenderArea::paintEvent(QPaintEvent *event)
 
 void RenderArea::mousePressEvent(QMouseEvent *event)
 {
+    if (insertingBody) {
+        inserter_.setBegin(QWidget::mapFromGlobal(QCursor::pos()));
+    }
+}
 
+void RenderArea::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (insertingBody) {
+        inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
+        sys_.addParticle(inserter_.createParticle());
+    }
+}
+
+void RenderArea::insertBody(const QPointF& pos)
+{
+    sys_.addParticle(new Particle(1, 100, pos, QPointF(2, 0)));
 }
 
 void RenderArea::drawBlackHole(QPainter *painter) const

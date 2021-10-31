@@ -15,6 +15,8 @@ public:
     const QList<Particle*>& getParticles() const { return particles_; }
     void updateParticles();
 
+    void addParticle(Particle* p);
+
 private:
     QList<Particle*> particles_;
     BlackHole* bh_;

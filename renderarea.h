@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTimer>
 
+#include "particleinserter.h"
 #include "particlesystem.h"
 
 class RenderArea : public QWidget
@@ -12,17 +13,24 @@ class RenderArea : public QWidget
 public:
     RenderArea();
 
+    void setInsertBody(bool state);
+    void setInsertBlackHole(bool state);
+
 protected:
     void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
     ParticleSystem sys_;
     QTimer timer_;
+    ParticleInserter inserter_;
 
-    bool insertingBodyEnabled = false;
-    bool insertingBlackHolesEnabled = false;
+    bool insertingBody = false;
+    bool insertingBlackHoles = false;
 
+    void insertBody(const QPointF& pos);
+    void insertBlackHole(const QPointF& pos);
 
     void drawBlackHole(QPainter* painter) const;
     void drawParticles(QPainter* painter) const;
