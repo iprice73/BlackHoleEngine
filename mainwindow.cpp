@@ -31,14 +31,21 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-void MainWindow::on_checkBox_stateChanged(int arg1)
-{
 
+void MainWindow::on_checkBoxBlackHole_stateChanged(int state)
+{
+    rda_->setInsertBlackHole(static_cast<bool>(state));
+    if (ui->checkBoxBody->isChecked()) {
+        ui->checkBoxBody->setChecked(!state);
+    }
 }
 
 
-void MainWindow::on_checkBox_2_stateChanged(int arg1)
+void MainWindow::on_checkBoxBody_stateChanged(int state)
 {
-
+    rda_->setInsertBody(static_cast<bool>(state));
+    if (ui->checkBoxBlackHole->isChecked()) {
+        ui->checkBoxBlackHole->setChecked(!state);
+    }
 }
 

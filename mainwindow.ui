@@ -36,7 +36,7 @@
     <property name="title">
      <string>Objects</string>
     </property>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="checkBoxBlackHole">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -49,7 +49,7 @@
       <string>Black Hole</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="checkBoxBody">
      <property name="geometry">
       <rect>
        <x>10</x>
