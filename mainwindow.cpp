@@ -49,3 +49,9 @@ void MainWindow::on_checkBoxBody_stateChanged(int state)
     }
 }
 
+
+void MainWindow::on_pushButton_eraseParticles_clicked()
+{
+    rda_->getSystem().eraseAll();
+}
+

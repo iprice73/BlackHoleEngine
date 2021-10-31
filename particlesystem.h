@@ -16,6 +16,7 @@ public:
     void updateParticles();
 
     void addParticle(Particle* p);
+    void eraseAll();
 
 private:
     QList<Particle*> particles_;

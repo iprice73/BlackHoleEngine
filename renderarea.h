@@ -16,6 +16,8 @@ public:
     void setInsertBody(bool state);
     void setInsertBlackHole(bool state);
 
+    ParticleSystem& getSystem() { return sys_; }
+
 protected:
     void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;

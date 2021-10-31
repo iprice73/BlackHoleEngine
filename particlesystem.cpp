@@ -3,16 +3,17 @@
 #include <algorithm>
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem(int w, int h) : bh_(new BlackHole(QPointF(w / 2, h / 2), 1000, 2, 2, 2))
+ParticleSystem::ParticleSystem(int w, int h) : bh_(new BlackHole(QPointF(w / 2, h / 2), 10000, 2, 2, 2))
 {
 //    generateParticles(10);
+      particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil
 }
 
 void ParticleSystem::generateParticles(int n)
 {
     for (int i = 0; i < n; i++) {
 //        auto mass = QRandomGenerator::global()->bounded(100);
-        auto mass = 10;
+        auto mass = 1;
         auto x = QRandomGenerator::global()->bounded(600);
         auto y = QRandomGenerator::global()->bounded(600);
         auto* p = new Particle(i, mass, QPointF(x, y));
@@ -82,4 +83,10 @@ void ParticleSystem::updateParticles()
 void ParticleSystem::addParticle(Particle *p)
 {
     particles_ << p;
+}
+
+void ParticleSystem::eraseAll()
+{
+    particles_.clear();
+    particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil 2
 }
