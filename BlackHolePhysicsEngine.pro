@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     particle.cpp \
+    particleinserter.cpp \
     particlesystem.cpp \
     renderarea.cpp
 
@@ -20,6 +21,7 @@ HEADERS += \
     blackhole.h \
     mainwindow.h \
     particle.h \
+    particleinserter.h \
     particlesystem.h \
     renderarea.h
 
