@@ -14,6 +14,11 @@ public:
     void setBegin(const QPointF& pos);
     void setEnd(const QPointF& pos);
 
+    QPointF getBegin() const { return begin_; }
+    QPointF getEnd() const { return end_; }
+
+    void unbind();
+
 private:
     QPointF begin_;
     QPointF end_;

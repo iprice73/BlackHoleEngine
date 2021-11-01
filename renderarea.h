@@ -22,6 +22,7 @@ protected:
     void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
     ParticleSystem sys_;
@@ -36,6 +37,7 @@ private:
 
     void drawBlackHole(QPainter* painter) const;
     void drawParticles(QPainter* painter) const;
+    void drawSlingShot(QPainter* painter) const;
 
 private slots:
     void updateSystem();

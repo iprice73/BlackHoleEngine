@@ -34,6 +34,7 @@ void RenderArea::paintEvent(QPaintEvent *event)
 
     drawBlackHole(&painter);
     drawParticles(&painter);
+    drawSlingShot(&painter);
 }
 
 void RenderArea::mousePressEvent(QMouseEvent *event)
@@ -48,6 +49,15 @@ void RenderArea::mouseReleaseEvent(QMouseEvent *event)
     if (insertingBody) {
         inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
         sys_.addParticle(inserter_.createParticle());
+        inserter_.unbind();
+    }
+}
+
+void RenderArea::mouseMoveEvent(QMouseEvent *event)
+{
+    if (insertingBody) {
+        inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
+        qDebug() << QWidget::mapFromGlobal(QCursor::pos());
     }
 }
 
@@ -76,9 +86,15 @@ void RenderArea::drawParticles(QPainter *painter) const
     auto ps = sys_.getParticles();
     painter->setBrush(QBrush(QColor(0,0,255)));
     for (const auto& body : ps) {
-//        painter.drawPixmap(body.getPos().x(), body.getPos().y(), 20, 20, QPixmap(":/images/body.jpg"));
         painter->drawEllipse(body->getX(), body->getY(), 10, 10);
     }
+}
+
+void RenderArea::drawSlingShot(QPainter *painter) const
+{
+    painter->setPen(QPen(Qt::yellow, 2));
+    painter->setBrush(QBrush(QColor(255,255,0)));
+    painter->drawLine(inserter_.getBegin(), inserter_.getEnd());
 }
 
 void RenderArea::updateSystem()

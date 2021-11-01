@@ -30,7 +30,6 @@ void Particle::updatePosition()
 void Particle::updateVelocity()
 {
     vel_ += acc_;
-    qDebug() << acc_;
 }
 
 void Particle::setAcceleration(const QPointF &acc) {
