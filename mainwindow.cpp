@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     rda_->setStyleSheet("background-color: black");
     scene_->addWidget(rda_);
     ui->graphicsView->setScene(scene_);
+    ui->graphicsView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 }
 
 MainWindow::~MainWindow()
