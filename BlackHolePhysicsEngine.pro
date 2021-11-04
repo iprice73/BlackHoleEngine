@@ -15,7 +15,8 @@ SOURCES += \
     particle.cpp \
     particleinserter.cpp \
     particlesystem.cpp \
-    renderarea.cpp
+    renderarea.cpp \
+    stellarobject.cpp
 
 HEADERS += \
     blackhole.h \
@@ -23,7 +24,8 @@ HEADERS += \
     particle.h \
     particleinserter.h \
     particlesystem.h \
-    renderarea.h
+    renderarea.h \
+    stellarobject.h
 
 FORMS += \
     mainwindow.ui

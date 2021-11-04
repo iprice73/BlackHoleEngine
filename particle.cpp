@@ -2,15 +2,8 @@
 
 #include <QtDebug>
 
-Particle::Particle()
-{
-
-}
-
-Particle::Particle(int id, float mass, const QPointF& point, QPointF init_vel) :
-    id_(id),
-    mass_(mass),
-    pos_(point),
+Particle::Particle(int id, float mass, const QPointF& pos, QPointF init_vel) :
+    StellarObject(id, mass, pos),
     vel_(init_vel)
 {
 
@@ -41,7 +34,3 @@ void Particle::adjustAcc(const QPointF &acc)
     acc_ += acc;
 }
 
-bool Particle::operator==(const Particle &right)
-{
-    return (right.getID() == id_);
-}
