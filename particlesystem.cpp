@@ -3,11 +3,10 @@
 #include <algorithm>
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem(int w, int h)
+ParticleSystem::ParticleSystem()
 {
 //    generateParticles(10);
       particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil
-//      blackholes_ << new BlackHole(0, 10000, QPointF(w / 2, h / 2), 2, 2);
 }
 
 void ParticleSystem::generateParticles(int n)

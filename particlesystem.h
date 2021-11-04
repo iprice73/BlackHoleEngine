@@ -9,7 +9,7 @@
 class ParticleSystem
 {
 public:
-    ParticleSystem(int w, int h);
+    ParticleSystem();
 
     const QList<Particle*>& getParticles() const { return particles_; }
     const QList<BlackHole*>& getBlackHoles() const { return blackholes_; }
