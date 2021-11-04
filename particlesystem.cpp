@@ -3,10 +3,11 @@
 #include <algorithm>
 #include <QRandomGenerator>
 
-ParticleSystem::ParticleSystem(int w, int h) : bh_(new BlackHole(QPointF(w / 2, h / 2), 10000, 2, 2, 2))
+ParticleSystem::ParticleSystem(int w, int h)
 {
 //    generateParticles(10);
       particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil
+      blackholes_ << new BlackHole(0, 10000, QPointF(w / 2, h / 2), 2, 2);
 }
 
 void ParticleSystem::generateParticles(int n)
@@ -23,18 +24,18 @@ void ParticleSystem::generateParticles(int n)
 
 void ParticleSystem::eraseOnCollision()
 {
-    for (const auto& p : particles_) {
-        if (distance(p) < 30) {
-            auto it = std::find(particles_.begin(), particles_.end(), p);
-            if (it != particles_.end()) particles_.erase(it);
-        }
-    }
+//    for (const auto& p : particles_) {
+//        if (distance(p) < 30) {
+//            auto it = std::find(particles_.begin(), particles_.end(), p);
+//            if (it != particles_.end()) particles_.erase(it);
+//        }
+//    }
 }
 
-float ParticleSystem::distance(Particle* src, Particle* dest) const
+template <class T>
+float ParticleSystem::distanceTo(Particle* src, T* dest) const
 {
-    QPointF pos = (dest) ? dest->getPos() : bh_->getPos();
-    return sqrt(pow(pos.x() - src->getX(), 2) + pow(pos.y() - src->getY(), 2));
+    return sqrt(pow(dest->getX() - src->getX(), 2) + pow(dest->getY() - src->getY(), 2));
 }
 
 float ParticleSystem::softDist(float dist, float e) const
@@ -42,14 +43,14 @@ float ParticleSystem::softDist(float dist, float e) const
     return sqrt(pow(dist, 2) + pow(e, 2));
 }
 
-QPointF ParticleSystem::calculateAcceleration(Particle* src, Particle* dest) const {
-    QPointF pos = (dest) ? dest->getPos() : bh_->getPos();
-    float mass = (dest) ? dest->getMass() : bh_->getMass();
+template <class T>
+QPointF ParticleSystem::calculateAccelerationTo(Particle* src, T* dest) const
+{
     const double G = 1;
     float dist, ax, ay, e = 0.01;
-    dist = softDist(distance(src, dest), e);
-    ax = 0.03 * G * mass * (pos.x() - src->getX()) / (dist * dist);
-    ay = 0.03 * G * mass * (pos.y() - src->getY()) / (dist * dist);
+    dist = softDist(distanceTo<T>(src, dest), e);
+    ax = 0.03 * G * dest->getMass() * (dest->getX() - src->getX()) / (dist * dist);
+    ay = 0.03 * G * dest->getMass() * (dest->getY() - src->getY()) / (dist * dist);
 
     return QPointF(ax, ay);
 }
@@ -59,7 +60,7 @@ void ParticleSystem::calculateAcceleration() const
     for (qsizetype i = 0; i < particles_.size(); i++) {
         for (qsizetype j = 0; j < particles_.size(); j++) {
             if (i != j) {
-                auto acc = calculateAcceleration(particles_[i], particles_[j]);
+                auto acc = calculateAccelerationTo<Particle>(particles_[i], particles_[j]);
                 particles_[i]->setAcceleration(acc);
             }
         }
@@ -69,7 +70,9 @@ void ParticleSystem::calculateAcceleration() const
 void ParticleSystem::adjustBlackHole() const
 {
     for (const auto& p : particles_) {
-        p->adjustAcc(calculateAcceleration(p));
+        for (const auto& b : blackholes_) {
+            p->adjustAcc(calculateAccelerationTo<BlackHole>(p, b));
+        }
     }
 }
 
@@ -90,3 +93,4 @@ void ParticleSystem::eraseAll()
     particles_.clear();
     particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil 2
 }
+
