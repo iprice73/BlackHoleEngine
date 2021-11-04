@@ -6,8 +6,7 @@
 constexpr int timeStep = 17;
 
 RenderArea::RenderArea() :
-    sys_(ParticleSystem(width(),
-    height())),
+    sys_(ParticleSystem()),
     timer_(QTimer()),
     inserter_(ParticleInserter())
 {
