@@ -7,7 +7,7 @@ ParticleSystem::ParticleSystem(int w, int h)
 {
 //    generateParticles(10);
       particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil
-      blackholes_ << new BlackHole(0, 10000, QPointF(w / 2, h / 2), 2, 2);
+//      blackholes_ << new BlackHole(0, 10000, QPointF(w / 2, h / 2), 2, 2);
 }
 
 void ParticleSystem::generateParticles(int n)
@@ -88,9 +88,17 @@ void ParticleSystem::addParticle(Particle *p)
     particles_ << p;
 }
 
-void ParticleSystem::eraseAll()
+void ParticleSystem::addBlackHole(BlackHole *b)
+{
+    blackholes_ << b;
+}
+
+void ParticleSystem::eraseParticles()
 {
     particles_.clear();
     particles_ << new Particle(0, 0.00001, QPointF(100000, 1000000)); // pure evil 2
 }
 
+void ParticleSystem::eraseBlackHoles() {
+    blackholes_.clear();
+}

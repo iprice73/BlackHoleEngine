@@ -26,6 +26,8 @@ private slots:
 
     void on_pushButton_eraseParticles_clicked();
 
+    void on_pushButton_eraseBlackHoles_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* scene_;

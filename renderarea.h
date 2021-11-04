@@ -30,7 +30,7 @@ private:
     ParticleInserter inserter_;
 
     bool insertingBody = false;
-    bool insertingBlackHoles = false;
+    bool insertingBlackHole = false;
 
     void insertBody(const QPointF& pos);
     void insertBlackHole(const QPointF& pos);

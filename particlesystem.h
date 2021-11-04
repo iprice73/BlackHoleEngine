@@ -17,7 +17,9 @@ public:
     void updateParticles();
 
     void addParticle(Particle* p);
-    void eraseAll();
+    void addBlackHole(BlackHole* b);
+    void eraseParticles();
+    void eraseBlackHoles();
 
 private:
     QList<Particle*> particles_;

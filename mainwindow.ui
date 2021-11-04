@@ -75,6 +75,19 @@
       <string>Erase All</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_eraseBlackHoles">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>80</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Erase All</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">

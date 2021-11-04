@@ -22,7 +22,7 @@ void RenderArea::setInsertBody(bool state)
 
 void RenderArea::setInsertBlackHole(bool state)
 {
-    insertingBlackHoles = state;
+    insertingBlackHole = state;
 }
 
 void RenderArea::paintEvent(QPaintEvent *event)
@@ -39,8 +39,12 @@ void RenderArea::paintEvent(QPaintEvent *event)
 
 void RenderArea::mousePressEvent(QMouseEvent *event)
 {
+    auto pos = QWidget::mapFromGlobal(QCursor::pos());
     if (insertingBody) {
-        inserter_.setBegin(QWidget::mapFromGlobal(QCursor::pos()));
+        inserter_.setBegin(pos);
+    }
+    if (insertingBlackHole) {
+        insertBlackHole(pos);
     }
 }
 
@@ -57,7 +61,6 @@ void RenderArea::mouseMoveEvent(QMouseEvent *event)
 {
     if (insertingBody) {
         inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
-        qDebug() << QWidget::mapFromGlobal(QCursor::pos());
     }
 }
 
@@ -66,25 +69,32 @@ void RenderArea::insertBody(const QPointF& pos)
     sys_.addParticle(new Particle(1, 100, pos, QPointF(2, 0)));
 }
 
+void RenderArea::insertBlackHole(const QPointF &pos)
+{
+    sys_.addBlackHole(new BlackHole(1, 10000, pos, 2, 2));
+}
+
 void RenderArea::drawBlackHole(QPainter *painter) const
 {
-    int bh_area = 60;
-    auto bh = sys_.getBlackHole();
-    QRadialGradient grad(bh->getPos(), bh_area);
-    grad.setColorAt(0, QColor(0, 0, 0));
-    grad.setColorAt(0.45, QColor(0, 0, 0));
-    grad.setColorAt(0.50, QColor(255, 255, 255, 127));
-    grad.setColorAt(1, QColor(255, 255, 255, 0));
+    int bh_area = 30;
+    auto bs = sys_.getBlackHoles();
+    for (const auto* bh : bs) {
+        QRadialGradient grad(bh->getPos(), bh_area);
+        grad.setColorAt(0, QColor(0, 0, 0));
+        grad.setColorAt(0.45, QColor(0, 0, 0));
+        grad.setColorAt(0.50, QColor(255, 255, 255, 127));
+        grad.setColorAt(1, QColor(255, 255, 255, 0));
 
-    painter->setBrush(QBrush(grad));
-    painter->setPen(Qt::NoPen);
-    painter->drawEllipse(bh->getPos(), bh_area, bh_area);
+        painter->setBrush(QBrush(grad));
+        painter->setPen(Qt::NoPen);
+        painter->drawEllipse(bh->getPos(), bh_area, bh_area);
+    }
 }
 
 void RenderArea::drawParticles(QPainter *painter) const
 {
     auto ps = sys_.getParticles();
-    painter->setBrush(QBrush(QColor(0,0,255)));
+    painter->setBrush(QBrush(QColor(255,140,0)));
     for (const auto& body : ps) {
         painter->drawEllipse(body->getX(), body->getY(), 10, 10);
     }
@@ -93,7 +103,6 @@ void RenderArea::drawParticles(QPainter *painter) const
 void RenderArea::drawSlingShot(QPainter *painter) const
 {
     painter->setPen(QPen(Qt::yellow, 2));
-    painter->setBrush(QBrush(QColor(255,255,0)));
     painter->drawLine(inserter_.getBegin(), inserter_.getEnd());
 }
 
