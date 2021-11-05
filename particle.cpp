@@ -13,6 +13,7 @@ void Particle::updateState()
 {
     updateVelocity();
     updatePosition();
+    updateTrace();
 }
 
 void Particle::updatePosition()
@@ -32,5 +33,13 @@ void Particle::setAcceleration(const QPointF &acc) {
 void Particle::adjustAcc(const QPointF &acc)
 {
     acc_ += acc;
+}
+
+void Particle::updateTrace()
+{
+    trace_.append(pos_);
+    if (trace_.size() >= 50) {
+        trace_.pop_front();
+    }
 }
 

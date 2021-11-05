@@ -24,6 +24,11 @@ void RenderArea::setInsertBlackHole(bool state)
     insertingBlackHole = state;
 }
 
+void RenderArea::setDrawingTrace(bool state)
+{
+    drawingTrace = state;
+}
+
 void RenderArea::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -94,8 +99,12 @@ void RenderArea::drawParticles(QPainter *painter) const
 {
     auto ps = sys_.getParticles();
     painter->setBrush(QBrush(QColor(255,140,0)));
+    painter->setPen(QPen(QColor(255,140,0)));
     for (const auto& body : ps) {
         painter->drawEllipse(body->getX(), body->getY(), 10, 10);
+        if (drawingTrace) {
+            painter->drawLines(body->getTrace());
+        }
     }
 }
 

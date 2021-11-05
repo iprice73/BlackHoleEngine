@@ -15,6 +15,7 @@ public:
 
     void setInsertBody(bool state);
     void setInsertBlackHole(bool state);
+    void setDrawingTrace(bool state);
 
     ParticleSystem& getSystem() { return sys_; }
 
@@ -31,6 +32,7 @@ private:
 
     bool insertingBody = false;
     bool insertingBlackHole = false;
+    bool drawingTrace = false;
 
     void insertBody(const QPointF& pos);
     void insertBlackHole(const QPointF& pos);
