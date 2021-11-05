@@ -50,6 +50,10 @@ void MainWindow::on_checkBoxBody_stateChanged(int state)
     }
 }
 
+void MainWindow::on_checkBox_DrawTraces_stateChanged(int state)
+{
+    rda_->setDrawingTrace(static_cast<bool>(state));
+}
 
 void MainWindow::on_pushButton_eraseParticles_clicked()
 {
@@ -61,4 +65,5 @@ void MainWindow::on_pushButton_eraseBlackHoles_clicked()
 {
     rda_->getSystem().eraseBlackHoles();
 }
+
 

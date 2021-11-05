@@ -23,10 +23,13 @@ private slots:
 
     void on_checkBoxBlackHole_stateChanged(int arg1);
     void on_checkBoxBody_stateChanged(int arg1);
+    void on_checkBox_DrawTraces_stateChanged(int arg1);
 
     void on_pushButton_eraseParticles_clicked();
 
     void on_pushButton_eraseBlackHoles_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;

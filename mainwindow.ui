@@ -101,17 +101,17 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <widget class="QCheckBox" name="checkBox_3">
+    <widget class="QCheckBox" name="checkBox_DrawTraces">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>111</width>
+       <width>71</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>Drag and drop</string>
+      <string>Traces</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_4">
