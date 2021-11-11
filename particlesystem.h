@@ -25,8 +25,6 @@ private:
     QList<Particle*> particles_;
     QList<BlackHole*> blackholes_;
 
-    // TODO: newton metric and porper inserts of bodys
-
     template <class T>
     QPointF calculateAccelerationTo(Particle* src, T* dest) const;
 
@@ -35,8 +33,8 @@ private:
 
     float softDist(float dist, float e) const ;
 
-    void generateParticles(int n);
-    void eraseOnCollision();
+    void eraseOnCollision(Particle* p);
+    void generate(int n);
 
     void calculateAcceleration() const;
     void adjustBlackHole() const;

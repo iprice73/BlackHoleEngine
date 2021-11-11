@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QStyleOption>
 
-constexpr int timeStep = 17;
+constexpr int timeStep = 2;
 
 RenderArea::RenderArea() :
     sys_(ParticleSystem()),
@@ -66,11 +66,6 @@ void RenderArea::mouseMoveEvent(QMouseEvent *event)
     if (insertingBody) {
         inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
     }
-}
-
-void RenderArea::insertBody(const QPointF& pos)
-{
-    sys_.addParticle(new Particle(1, 100, pos, QPointF(2, 0)));
 }
 
 void RenderArea::insertBlackHole(const QPointF &pos)

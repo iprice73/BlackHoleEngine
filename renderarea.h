@@ -34,7 +34,6 @@ private:
     bool insertingBlackHole = false;
     bool drawingTrace = false;
 
-    void insertBody(const QPointF& pos);
     void insertBlackHole(const QPointF& pos);
 
     void drawBlackHole(QPainter* painter) const;
