@@ -1,5 +1,7 @@
 #include "particleinserter.h"
 
+#include <QDebug>
+
 ParticleInserter::ParticleInserter()
 {
 
@@ -7,7 +9,8 @@ ParticleInserter::ParticleInserter()
 
 Particle *ParticleInserter::createParticle()
 {
-    return new Particle(1, 100, begin_, calculateVelocity());
+    static qsizetype cnt = 0;
+    return new Particle(cnt++, 100, begin_, calculateVelocity());
 }
 
 void ParticleInserter::setBegin(const QPointF &pos)
@@ -35,7 +38,7 @@ QPointF ParticleInserter::calculateVelocity() const
     dist_x = (dist_x >= 100) ? 100 : dist_x;
     dist_y = (dist_y >= 100) ? 100 : dist_y;
 
-    return QPointF(-dist_x / 10, -dist_y / 10);
+    return QPointF(-dist_x / 150, -dist_y / 150);
 }
 
 float ParticleInserter::distanceX() const
