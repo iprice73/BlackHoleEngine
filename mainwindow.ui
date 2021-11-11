@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>926</width>
-    <height>598</height>
+    <width>921</width>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -176,7 +176,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Schwarzchild</string>
+      <string>Schwarzschild</string>
      </property>
     </widget>
    </widget>
@@ -243,7 +243,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>926</width>
+     <width>921</width>
      <height>25</height>
     </rect>
    </property>

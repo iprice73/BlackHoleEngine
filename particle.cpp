@@ -14,6 +14,7 @@ void Particle::updateState()
     updateVelocity();
     updatePosition();
     updateTrace();
+    setAcceleration(QPointF(0.f, 0.f)); // Reset acc to prevent infinity jumps
 }
 
 void Particle::updatePosition()
@@ -37,8 +38,9 @@ void Particle::adjustAcc(const QPointF &acc)
 
 void Particle::updateTrace()
 {
+//    trace_.append(pos_);
     trace_.append(pos_);
-    if (trace_.size() >= 50) {
+    if (trace_.size() >= 1000) {
         trace_.pop_front();
     }
 }

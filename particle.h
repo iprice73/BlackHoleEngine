@@ -2,6 +2,7 @@
 #define PARTICLE_H
 
 #include <QList>
+#include <QLineF>
 
 #include "stellarobject.h"
 
@@ -11,6 +12,7 @@ public:
     Particle(int id, float mass, const QPointF& pos, QPointF init_vel = QPointF(0.0f, 0.0f));
 
     QPointF getVel() const { return vel_; }
+    QPointF getAcc() const { return acc_; }
     QList<QPointF> getTrace() const { return trace_; }
 
     void updateState();

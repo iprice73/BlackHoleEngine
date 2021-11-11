@@ -10,10 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    this->setStyleSheet("background-color: grey");
     scene_ = new QGraphicsScene();
     rda_ = new RenderArea();
-    rda_->setFixedSize(ui->graphicsView->size());
+    rda_->setFixedSize(1000, 1000);
     rda_->setStyleSheet("background-color: black");
     scene_->addWidget(rda_);
     ui->graphicsView->setScene(scene_);
