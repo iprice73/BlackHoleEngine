@@ -11,7 +11,10 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::eraseOnCollision(Particle* p)
 {
-
+    auto it = std::find(particles_.begin(), particles_.end(), p);
+    if (it != particles_.end()) {
+        particles_.erase(it);
+    }
 }
 
 void ParticleSystem::generate(int n)
@@ -38,42 +41,49 @@ float ParticleSystem::softDist(float dist, float e) const
 }
 
 template <class T>
-QPointF ParticleSystem::calculateAccelerationTo(Particle* src, T* dest) const
+void ParticleSystem::handleParticle(Particle* src, T* dest, float dist) {
+    if (dist < 5) {
+        eraseOnCollision(src);
+    } else {
+        auto acc = calculateAccelerationTo<T>(src, dest, softDist(dist, 0.01));
+        src->adjustAcc(acc);
+    }
+}
+
+void ParticleSystem::manageParticles()
+{
+    for (const auto& src : particles_) {
+        for (const auto& dest : particles_) {
+            if (src != dest) {
+                handleParticle<Particle>(src, dest, distanceTo<Particle>(src, dest));
+            }
+        }
+    }
+}
+
+template <class T>
+QPointF ParticleSystem::calculateAccelerationTo(Particle* src, T* dest, float dist) const
 {
     const double G = 6.67e-3;
-    float dist, ax, ay, e = 0.01;
-    dist = softDist(distanceTo<T>(src, dest), e);
+    float ax, ay;
     ax = G * dest->getMass() * (dest->getX() - src->getX()) / (pow(dist, 3));
     ay = G * dest->getMass() * (dest->getY() - src->getY()) / (pow(dist, 3));
 
     return QPointF(ax, ay);
 }
 
-void ParticleSystem::calculateAcceleration() const
-{
-    for (qsizetype i = 0; i < particles_.size(); i++) {
-        for (qsizetype j = 0; j < particles_.size(); j++) {
-            if (i != j) {
-                auto acc = calculateAccelerationTo<Particle>(particles_[i], particles_[j]);
-                particles_[i]->adjustAcc(acc);
-            }
-        }
-    }
-}
-
-void ParticleSystem::adjustBlackHole() const
+void ParticleSystem::adjustBlackHole()
 {
     for (const auto& p : particles_) {
         for (const auto& b : blackholes_) {
-            p->adjustAcc(calculateAccelerationTo<BlackHole>(p, b));
+            handleParticle<BlackHole>(p, b, distanceTo<BlackHole>(p, b));
         }
     }
 }
 
 void ParticleSystem::updateParticles()
 {
-//    eraseOnCollision();
-    calculateAcceleration();
+    manageParticles();
     adjustBlackHole();
 }
 

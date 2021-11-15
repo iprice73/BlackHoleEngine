@@ -26,18 +26,22 @@ private:
     QList<BlackHole*> blackholes_;
 
     template <class T>
-    QPointF calculateAccelerationTo(Particle* src, T* dest) const;
+    QPointF calculateAccelerationTo(Particle* src, T* dest, float dist) const;
 
     template <class T>
     float distanceTo(Particle* src, T* dest) const;
 
+    template <class T>
+    void handleParticle(Particle* src, T* dest, float dist);
+
     float softDist(float dist, float e) const ;
 
+
+    void manageParticles();
     void eraseOnCollision(Particle* p);
     void generate(int n);
 
-    void calculateAcceleration() const;
-    void adjustBlackHole() const;
+    void adjustBlackHole();
 };
 
 #endif // PARTICLESYSTEM_H
