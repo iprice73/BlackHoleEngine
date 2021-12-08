@@ -15,6 +15,8 @@ public:
     float getMass() const { return mass_; }
     QPointF getPos() const { return pos_; }
 
+    void addMass(float mass) { mass_ += mass; }
+
     bool operator==(const StellarObject& other);
     bool operator!=(const StellarObject& other);
 

@@ -38,9 +38,9 @@ void Particle::adjustAcc(const QPointF &acc)
 
 void Particle::updateTrace()
 {
-//    trace_.append(pos_);
+    const qsizetype max_trace = 1000;
     trace_.append(pos_);
-    if (trace_.size() >= 1000) {
+    if (trace_.size() >= max_trace) {
         trace_.pop_front();
     }
 }

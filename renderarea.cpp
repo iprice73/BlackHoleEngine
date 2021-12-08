@@ -114,6 +114,7 @@ void RenderArea::updateSystem()
     sys_.updateParticles();
     for (const auto& p : sys_.getParticles()) {
         p->updateState();
+//        qDebug() << p->getSphericalR(sys_.getBlackHoles().first()->getPos()) << p->getSphericalRho(sys_.getBlackHoles().first()->getPos());
     }
     repaint();
 }

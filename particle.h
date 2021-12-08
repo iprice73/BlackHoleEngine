@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QLineF>
+#include <QtMath>
 
 #include "stellarobject.h"
 
@@ -14,6 +15,9 @@ public:
     QPointF getVel() const { return vel_; }
     QPointF getAcc() const { return acc_; }
     QList<QPointF> getTrace() const { return trace_; }
+
+    float getSphericalR(const QPointF& bh) const { return sqrt(pow((pos_.x() - bh.x()), 2) + pow((pos_.y() - bh.y()), 2)); }
+    float getSphericalRho(const QPointF& bh) const { return qAtan((pos_.y() - bh.y()) / (pos_.x() - bh.x())); }
 
     void updateState();
     void setAcceleration(const QPointF& acc);

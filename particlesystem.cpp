@@ -22,8 +22,8 @@ void ParticleSystem::generate(int n)
     for (int i = 0; i < n; i++) {
     //        auto mass = QRandomGenerator::global()->bounded(100);
             auto mass = 100;
-            auto x = QRandomGenerator::global()->bounded(600);
-            auto y = QRandomGenerator::global()->bounded(600);
+            auto x = QRandomGenerator::global()->bounded(100);
+            auto y = QRandomGenerator::global()->bounded(100);
             auto* p = new Particle(i, mass, QPointF(x, y));
             particles_ << p;
         }
@@ -40,10 +40,16 @@ float ParticleSystem::softDist(float dist, float e) const
     return sqrt(pow(dist, 2) + pow(e, 2));
 }
 
+float ParticleSystem::rk4(float x0, float y0, float x, float h) const
+{
+
+}
+
 template <class T>
 void ParticleSystem::handleParticle(Particle* src, T* dest, float dist) {
     if (dist < 5) {
         eraseOnCollision(src);
+        dest->addMass(src->getMass());
     } else {
         auto acc = calculateAccelerationTo<T>(src, dest, softDist(dist, 0.01));
         src->adjustAcc(acc);
@@ -105,3 +111,37 @@ void ParticleSystem::eraseParticles()
 void ParticleSystem::eraseBlackHoles() {
     blackholes_.clear();
 }
+
+QPointF ParticleSystem::calculateSchwarzschildMetric() const
+{
+//    for (const auto& p : particles_) {
+//        auto init_vel = p->getVel();
+
+//    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

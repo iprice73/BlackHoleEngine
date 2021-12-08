@@ -28,6 +28,8 @@ private:
     template <class T>
     QPointF calculateAccelerationTo(Particle* src, T* dest, float dist) const;
 
+    QPointF calculateSchwarzschildMetric() const;
+
     template <class T>
     float distanceTo(Particle* src, T* dest) const;
 
@@ -35,6 +37,7 @@ private:
     void handleParticle(Particle* src, T* dest, float dist);
 
     float softDist(float dist, float e) const ;
+    float rk4(float x0, float y0, float x, float h) const;
 
 
     void manageParticles();
