@@ -2,12 +2,16 @@
 #define CHARTTOOL_H
 
 #include <QObject>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChartView>
 
-class ChartTool
+class ChartTool : public QObject
 {
     Q_OBJECT
 public:
-    ChartTool();
+    explicit ChartTool(QObject *parent = nullptr);
+    void createChart(const QList<QPointF>& pts, const QString& name) const;
+
 };
 
 #endif // CHARTTOOL_H

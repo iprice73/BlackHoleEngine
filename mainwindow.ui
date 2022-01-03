@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>921</width>
-    <height>605</height>
+    <width>905</width>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>671</width>
-      <height>531</height>
+      <height>541</height>
      </rect>
     </property>
    </widget>
@@ -29,7 +29,7 @@
      <rect>
       <x>689</x>
       <y>9</y>
-      <width>221</width>
+      <width>201</width>
       <height>101</height>
      </rect>
     </property>
@@ -41,7 +41,7 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>83</width>
+       <width>101</width>
        <height>22</height>
       </rect>
      </property>
@@ -65,7 +65,7 @@
     <widget class="QPushButton" name="pushButton_eraseParticles">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>110</x>
        <y>60</y>
        <width>80</width>
        <height>25</height>
@@ -78,7 +78,7 @@
     <widget class="QPushButton" name="pushButton_eraseBlackHoles">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>110</x>
        <y>30</y>
        <width>80</width>
        <height>25</height>
@@ -93,9 +93,9 @@
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>340</y>
-      <width>221</width>
-      <height>101</height>
+      <y>220</y>
+      <width>201</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="title">
@@ -114,97 +114,27 @@
       <string>Traces</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_4">
+    <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>83</width>
-       <height>22</height>
+       <width>93</width>
+       <height>26</height>
       </rect>
      </property>
      <property name="text">
-      <string>Plots</string>
+      <string>Rays</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>120</y>
-      <width>221</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Metric</string>
-    </property>
-    <widget class="QCheckBox" name="checkBox_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>83</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Newton</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_6">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>30</y>
-       <width>83</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Kerr</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_7">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>111</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Schwarzschild</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>470</y>
-      <width>221</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Render Black Hole</string>
-    </property>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>230</y>
-      <width>221</width>
-      <height>101</height>
+      <y>120</y>
+      <width>201</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="title">
@@ -228,12 +158,51 @@
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>101</width>
+       <width>121</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
       <string>Runge-Kutta</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>330</y>
+      <width>201</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Charts</string>
+    </property>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>51</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>A(t)</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>30</y>
+       <width>51</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>V(t)</string>
      </property>
     </widget>
    </widget>
@@ -243,7 +212,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>921</width>
+     <width>905</width>
      <height>25</height>
     </rect>
    </property>

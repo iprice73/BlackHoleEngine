@@ -16,6 +16,7 @@ public:
     void setInsertBody(bool state);
     void setInsertBlackHole(bool state);
     void setDrawingTrace(bool state);
+    void setDrawingRays(bool state);
 
     ParticleSystem& getSystem() { return sys_; }
 
@@ -29,16 +30,19 @@ private:
     ParticleSystem sys_;
     QTimer timer_;
     ParticleInserter inserter_;
+    QPointF rayPoint_;
 
     bool insertingBody = false;
     bool insertingBlackHole = false;
     bool drawingTrace = false;
+    bool drawingRays = false;
 
     void insertBlackHole(const QPointF& pos);
 
     void drawBlackHole(QPainter* painter) const;
     void drawParticles(QPainter* painter) const;
     void drawSlingShot(QPainter* painter) const;
+    void drawRay(QPainter* painter, BlackHole* bh = nullptr) const;
 
 private slots:
     void updateSystem();

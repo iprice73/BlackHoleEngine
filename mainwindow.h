@@ -26,10 +26,11 @@ private slots:
     void on_checkBox_DrawTraces_stateChanged(int arg1);
 
     void on_pushButton_eraseParticles_clicked();
-
     void on_pushButton_eraseBlackHoles_clicked();
 
+    void on_pushButton_2_clicked();
 
+    void on_checkBox_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

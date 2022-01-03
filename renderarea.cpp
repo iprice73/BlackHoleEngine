@@ -2,6 +2,9 @@
 
 #include <QPainter>
 #include <QStyleOption>
+#include <QLineF>
+#include <QMouseEvent>
+#include <QtMath>
 
 constexpr int timeStep = 2;
 
@@ -29,6 +32,10 @@ void RenderArea::setDrawingTrace(bool state)
     drawingTrace = state;
 }
 
+void RenderArea::setDrawingRays(bool state) {
+    drawingRays = state;
+}
+
 void RenderArea::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -39,6 +46,9 @@ void RenderArea::paintEvent(QPaintEvent *event)
     drawBlackHole(&painter);
     drawParticles(&painter);
     drawSlingShot(&painter);
+    if (!sys_.getBlackHoles().empty()) {
+        drawRay(&painter, sys_.getBlackHoles()[0]);
+    }
 }
 
 void RenderArea::mousePressEvent(QMouseEvent *event)
@@ -66,6 +76,12 @@ void RenderArea::mouseMoveEvent(QMouseEvent *event)
     if (insertingBody) {
         inserter_.setEnd(QWidget::mapFromGlobal(QCursor::pos()));
     }
+
+    if (drawingRays) {
+        rayPoint_.setX(QWidget::mapFromGlobal(QCursor::pos()).x());
+        rayPoint_.setY(QWidget::mapFromGlobal(QCursor::pos()).y());
+        repaint();
+    }
 }
 
 void RenderArea::insertBlackHole(const QPointF &pos)
@@ -83,7 +99,6 @@ void RenderArea::drawBlackHole(QPainter *painter) const
         grad.setColorAt(0.45, QColor(0, 0, 0));
         grad.setColorAt(0.50, QColor(255, 255, 255, 127));
         grad.setColorAt(1, QColor(255, 255, 255, 0));
-
         painter->setBrush(QBrush(grad));
         painter->setPen(Qt::NoPen);
         painter->drawEllipse(bh->getPos(), bh_area, bh_area);
@@ -109,12 +124,53 @@ void RenderArea::drawSlingShot(QPainter *painter) const
     painter->drawLine(inserter_.getBegin(), inserter_.getEnd());
 }
 
+void RenderArea::drawRay(QPainter *painter, BlackHole* bh) const
+{
+    painter->setPen(QPen(Qt::yellow, 1));
+    painter->drawEllipse(rayPoint_, 10, 10);
+    QList<QLineF> rays;
+
+    if (bh) {
+        auto bh_point = bh->getPos();
+        qsizetype rayLength = 100;
+        qreal theta = 90;
+        auto start_point = rayPoint_;
+        for (qsizetype i = 0; i < rayLength; i++) {
+            QLineF angleLine;
+            angleLine.setP1(start_point);
+            angleLine.setLength(10);
+            auto angle = atan2f(start_point.x() - bh_point.x(), start_point.y() - bh_point.y()) / M_PI * 180;
+            theta += 350 / sqrt(pow(bh_point.x() - start_point.x(), 2) + pow(bh_point.y() - start_point.y(), 2));
+            angleLine.setAngle(theta);
+            start_point = angleLine.p2();
+            rays << angleLine;
+        }
+    }
+
+    painter->drawLines(rays);
+
+
+
+
+
+
+//    QLineF angleLine1, angleLine2;
+//    angleLine1.setP1(rayPoint_);
+//    angleLine1.setAngle(0);
+//    angleLine1.setLength(200);
+//    angleLine2.setP1(angleLine1.p2());
+//    angleLine2.setAngle(30);
+//    angleLine2.setLength(200);
+//    painter->drawLine(angleLine1);
+//    rays << angleLine1 << angleLine2;
+//    painter->drawLines(rays);
+}
+
 void RenderArea::updateSystem()
 {
     sys_.updateParticles();
     for (const auto& p : sys_.getParticles()) {
         p->updateState();
-//        qDebug() << p->getSphericalR(sys_.getBlackHoles().first()->getPos()) << p->getSphericalRho(sys_.getBlackHoles().first()->getPos());
     }
     repaint();
 }

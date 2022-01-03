@@ -15,6 +15,8 @@ public:
     QPointF getVel() const { return vel_; }
     QPointF getAcc() const { return acc_; }
     QList<QPointF> getTrace() const { return trace_; }
+    QList<QPointF> getAccOverTime() const { return acc_over_time; }
+    QList<QPointF> getVelOverTime() const { return vel_over_time; }
 
     float getSphericalR(const QPointF& bh) const { return sqrt(pow((pos_.x() - bh.x()), 2) + pow((pos_.y() - bh.y()), 2)); }
     float getSphericalRho(const QPointF& bh) const { return qAtan((pos_.y() - bh.y()) / (pos_.x() - bh.x())); }
@@ -27,11 +29,18 @@ private:
     QPointF vel_;
     QPointF acc_;
 
-    QList<QPointF> trace_;
+    float getMag(const QPointF& vec) const;
 
+    QList<QPointF> trace_;
+    QList<QPointF> acc_over_time;
+    QList<QPointF> vel_over_time;
+
+    void updateAccForChart();
+    void updateVelOverTime();
     void updatePosition();
     void updateVelocity();
     void updateTrace();
+
 };
 
 #endif // PARTICLE_H

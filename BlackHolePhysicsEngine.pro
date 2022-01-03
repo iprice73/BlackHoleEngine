@@ -1,4 +1,4 @@
-QT       += core gui widgets
+QT       += core gui widgets charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -10,7 +10,6 @@ CONFIG += c++17
 SOURCES += \
     blackhole.cpp \
     charttool.cpp \
-    christoffelsymbols.cpp \
     main.cpp \
     mainwindow.cpp \
     particle.cpp \
@@ -22,7 +21,6 @@ SOURCES += \
 HEADERS += \
     blackhole.h \
     charttool.h \
-    christoffelsymbols.h \
     mainwindow.h \
     particle.h \
     particleinserter.h \

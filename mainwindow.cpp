@@ -4,12 +4,14 @@
 #include <QDebug>
 #include <QDir>
 #include <QProcess>
+#include <charttool.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->resize(915, 600);
     scene_ = new QGraphicsScene();
     rda_ = new RenderArea();
     rda_->setFixedSize(1000, 1000);
@@ -23,14 +25,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_pushButton_clicked()
-{
-    QString filename = "D:/source/Qt/BlackHolePhysicsEngine/a.exe";
-    QProcess::startDetached(filename);
-}
-
-
 
 void MainWindow::on_checkBoxBlackHole_stateChanged(int state)
 {
@@ -65,4 +59,22 @@ void MainWindow::on_pushButton_eraseBlackHoles_clicked()
     rda_->getSystem().eraseBlackHoles();
 }
 
+void MainWindow::on_pushButton_clicked()
+{
+    auto* tool = new ChartTool();
+    tool->createChart(rda_->getSystem().getParticles()[0]->getAccOverTime(), "Acceleration");
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    auto* tool = new ChartTool();
+    tool->createChart(rda_->getSystem().getParticles()[0]->getVelOverTime(), "Velocity");
+}
+
+
+void MainWindow::on_checkBox_stateChanged(int state)
+{
+    rda_->setDrawingRays(static_cast<bool>(state));
+}
 
