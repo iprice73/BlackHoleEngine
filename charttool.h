@@ -2,8 +2,6 @@
 #define CHARTTOOL_H
 
 #include <QObject>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QChartView>
 
 class ChartTool : public QObject
 {

@@ -5,6 +5,7 @@
 #include <QLineF>
 #include <QMouseEvent>
 #include <QtMath>
+#include <QDebug>
 
 constexpr int timeStep = 2;
 
@@ -128,7 +129,7 @@ void RenderArea::drawRay(QPainter *painter, BlackHole* bh) const
 {
     painter->setPen(QPen(Qt::yellow, 1));
     painter->drawEllipse(rayPoint_, 10, 10);
-    QList<QLineF> rays;
+    QVector<QLineF> rays;
 
     if (bh) {
         auto bh_point = bh->getPos();

@@ -1,5 +1,10 @@
 #include "charttool.h"
 
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChartView>
+
+using namespace QtCharts;
+
 ChartTool::ChartTool(QObject *parent)
     : QObject{parent}
 {
@@ -22,5 +27,4 @@ void ChartTool::createChart(const QList<QPointF>& pts, const QString& name) cons
     view->setRenderHint(QPainter::Antialiasing);
     view->resize(1000, 500);
     view->show();
-
 }

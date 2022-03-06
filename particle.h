@@ -14,7 +14,7 @@ public:
 
     QPointF getVel() const { return vel_; }
     QPointF getAcc() const { return acc_; }
-    QList<QPointF> getTrace() const { return trace_; }
+    QVector<QPointF> getTrace() const { return QVector<QPointF>(trace_.begin(), trace_.end()); }
     QList<QPointF> getAccOverTime() const { return acc_over_time; }
     QList<QPointF> getVelOverTime() const { return vel_over_time; }
 
