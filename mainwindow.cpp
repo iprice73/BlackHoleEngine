@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->resize(915, 600);
+    this->resize(1280, 720);
     scene_ = new QGraphicsScene();
     rda_ = new RenderArea();
-    rda_->setFixedSize(1000, 1000);
+    rda_->setFixedSize(1280, 720);
     rda_->setStyleSheet("background-color: black");
     scene_->addWidget(rda_);
     ui->graphicsView->setScene(scene_);
@@ -61,15 +61,15 @@ void MainWindow::on_pushButton_eraseBlackHoles_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    auto* tool = new ChartTool();
-    tool->createChart(rda_->getSystem().getParticles()[0]->getAccOverTime(), "Acceleration");
+    // auto* tool = new ChartTool();
+    // tool->createChart(rda_->getSystem().getParticles()[0]->getAccOverTime(), "Acceleration");
 }
 
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    auto* tool = new ChartTool();
-    tool->createChart(rda_->getSystem().getParticles()[0]->getVelOverTime(), "Velocity");
+    // auto* tool = new ChartTool();
+    // tool->createChart(rda_->getSystem().getParticles()[0]->getVelOverTime(), "Velocity");
 }
 
 

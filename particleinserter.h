@@ -11,6 +11,7 @@ public:
     ParticleInserter();
 
     Particle* createParticle();
+
     void setBegin(const QPointF& pos);
     void setEnd(const QPointF& pos);
 
