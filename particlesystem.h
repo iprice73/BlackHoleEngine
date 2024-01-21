@@ -25,18 +25,17 @@ private:
     QList<Particle*> particles_;
     QList<BlackHole*> blackholes_;
 
+    void blackHoleForce(Particle* p);
+    void particleForce(Particle* p);
+
+    void calculateGravityForces();
+
+    float calculateDistance(float dx, float dy) const;
+
     template <class T>
-    QPointF calculateAccelerationTo(Particle* src, T* dest, float dist) const;
+    QPointF calculateAccelerationTo(Particle* frist, T* second) const;
 
-    QPointF calculateSchwarzschildMetric() const;
 
-    template <class T>
-    float distanceTo(Particle* src, T* dest) const;
-
-    template <class T>
-    void handleParticle(Particle* src, T* dest, float dist);
-
-    float softDist(float dist, float e) const ;
     float rk4(float x0, float y0, float x, float h) const;
 
 

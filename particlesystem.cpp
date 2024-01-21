@@ -4,6 +4,8 @@
 #include <QRandomGenerator>
 #include <QDebug>
 
+constexpr float G = 6.67e-8;
+
 ParticleSystem::ParticleSystem()
 {
 
@@ -29,68 +31,50 @@ void ParticleSystem::generate(int n)
         }
 }
 
-template <class T>
-float ParticleSystem::distanceTo(Particle* src, T* dest) const
-{
-    return sqrt(pow(dest->getX() - src->getX(), 2) + pow(dest->getY() - src->getY(), 2));
-}
-
-float ParticleSystem::softDist(float dist, float e) const
-{
-    return sqrt(pow(dist, 2) + pow(e, 2));
-}
-
-float ParticleSystem::rk4(float x0, float y0, float x, float h) const
-{
-
-}
-
-template <class T>
-void ParticleSystem::handleParticle(Particle* src, T* dest, float dist) {
-    if (dist < 5) {
-        eraseOnCollision(src);
-        dest->addMass(src->getMass());
-    } else {
-        auto acc = calculateAccelerationTo<T>(src, dest, softDist(dist, 0.01));
-        src->adjustAcc(acc);
+void ParticleSystem::blackHoleForce(Particle* p){
+    for (const auto& bh : blackholes_) {
+        auto acc = calculateAccelerationTo<BlackHole>(p, bh);
+        p->adjustAcc(acc);
     }
 }
 
-void ParticleSystem::manageParticles()
-{
-    for (const auto& src : particles_) {
-        for (const auto& dest : particles_) {
-            if (src != dest) {
-                handleParticle<Particle>(src, dest, distanceTo<Particle>(src, dest));
-            }
+void ParticleSystem::particleForce(Particle* p){
+    for (const auto& other_p : particles_) {
+        if (p != other_p) {
+            auto acc = calculateAccelerationTo<Particle>(p, other_p);
+            p->adjustAcc(acc);
         }
     }
 }
 
-template <class T>
-QPointF ParticleSystem::calculateAccelerationTo(Particle* src, T* dest, float dist) const
-{
-    const double G = 6.67e-3;
-    float ax, ay;
-    ax = G * dest->getMass() * (dest->getX() - src->getX()) / (pow(dist, 3));
-    ay = G * dest->getMass() * (dest->getY() - src->getY()) / (pow(dist, 3));
-
-    return QPointF(ax, ay);
+float ParticleSystem::calculateDistance(float dx, float dy) const {
+    return qSqrt(dx * dx + dy * dy);
 }
 
-void ParticleSystem::adjustBlackHole()
-{
+template <class T>
+QPointF ParticleSystem::calculateAccelerationTo(Particle* first, T* second) const {
+    float dx = second->getX() - first->getX();
+    float dy = second->getY() - first->getY();
+    float distance = calculateDistance(dx, dy);
+
+    auto second_mass = second->getMass();
+
+    float acc_x = (G * second_mass * dx) / (distance * distance * distance);
+    float acc_y = (G * second_mass * dy) / (distance * distance * distance);
+
+    return {acc_x, acc_y};
+}
+
+void ParticleSystem::calculateGravityForces() {
     for (const auto& p : particles_) {
-        for (const auto& b : blackholes_) {
-            handleParticle<BlackHole>(p, b, distanceTo<BlackHole>(p, b));
-        }
+        particleForce(p);
+        blackHoleForce(p);
     }
 }
 
 void ParticleSystem::updateParticles()
 {
-    manageParticles();
-    adjustBlackHole();
+    calculateGravityForces();
 }
 
 void ParticleSystem::addParticle(Particle *p)
@@ -111,17 +95,6 @@ void ParticleSystem::eraseParticles()
 void ParticleSystem::eraseBlackHoles() {
     blackholes_.clear();
 }
-
-QPointF ParticleSystem::calculateSchwarzschildMetric() const
-{
-//    for (const auto& p : particles_) {
-//        auto init_vel = p->getVel();
-
-//    }
-}
-
-
-
 
 
 

@@ -87,7 +87,7 @@ void RenderArea::mouseMoveEvent(QMouseEvent *event)
 
 void RenderArea::insertBlackHole(const QPointF &pos)
 {
-    sys_.addBlackHole(new BlackHole(1, 10000, pos, 2, 2));
+    sys_.addBlackHole(new BlackHole(1, 1e9, pos, 2, 2));
 }
 
 void RenderArea::drawBlackHole(QPainter *painter) const
